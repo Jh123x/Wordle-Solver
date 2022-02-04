@@ -116,6 +116,10 @@ dmypy.json
 # Bot competition stuff
 sample-bot.py
 wordle.py
-wordlist.txt
-wordlist6.txt
 *.bat
+
+# Misc
+util.py
+
+# Wordlists
+wordlist*.txt
