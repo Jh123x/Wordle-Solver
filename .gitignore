@@ -112,3 +112,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Bot competition stuff
+sample-bot.py
+wordle.py
+wordlist.txt
+wordlist6.txt
+*.bat

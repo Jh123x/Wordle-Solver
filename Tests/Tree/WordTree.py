@@ -13,17 +13,23 @@ class WordTreeTest(TestCase):
         self.hello_tree = WordTree(['hello'])
         self.h_list = ['hello', 'hi', 'hee', 'hitler']
         self.h_tree = WordTree(self.h_list)
-        
+        self.w_list = ['plate', 'slate']
+        self.w_tree = WordTree(self.w_list)
+       
     def test_find_template_string_wildcard(self):
+        self.assertEqual(self.h_tree.find_template("______"), set(['hitler']))
+        self.assertEqual(self.tree.find_template('_____'), {'hello', 'world'})
         self.assertEqual(self.b_tree.find_template("_"), set())
         self.assertEqual(self.a_tree.find_template("_"), set(['a']))
         self.assertEqual(self.h_tree.find_template("___"), set(['hee']))
         self.assertEqual(self.h_tree.find_template("hi____"), set(['hitler']))
+        self.assertEqual(self.w_tree.find_template('_late'), set(self.w_list))
 
     def test_get_all(self):
         self.assertEqual(self.h_tree.get_all_word(), set(self.h_list))
         self.assertEqual(self.a_tree.get_all_word(), set(['a']))
         self.assertEqual(self.b_tree.get_all_word(), set())
+        self.assertEqual(self.w_tree.get_all_word(), set(self.w_list))
 
     def test_word_is_really_added(self):
         curr = self.hello_tree.root
