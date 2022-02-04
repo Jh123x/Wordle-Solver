@@ -2,7 +2,7 @@ import unittest
 
 from Guesser.Guesser import Guesser
 
-wordlist_file = 'wordlist.txt'
+wordlist_file = 'wordle-answers-alphabetical.txt'
 with open(wordlist_file) as f:
     wordlist = f.readlines()
 

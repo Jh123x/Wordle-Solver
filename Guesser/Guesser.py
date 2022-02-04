@@ -12,11 +12,15 @@ class Guesser(object):
         # Find the max freqency of letter at that position.
         if word_length == -1:
             word_length = len(word_list[0])
-        letters = [{} for _ in range(word_length)]
+        self.letters = [{} for _ in range(word_length)]
+        self.letter_freq = {}
         for word in word_list:
             for index, letter in enumerate(word):
-                letters[index][letter] = letters[index].get(letter, 0) + 1
-        self.letters = letters
+                self.letters[index][letter] = self.letters[index].get(letter, 0) + 1
+                self.letter_freq[letter] = self.letter_freq.get(letter, 0) + 1
+
+        self.letters_max = list(map(lambda x: max(x.values()), self.letters))
+        self.letter_freq_max = max(self.letter_freq.values())
 
         # Get the default guess based on the wordlist
         self.default_guess = max(word_list, key=self._score_calc)
@@ -37,7 +41,7 @@ class Guesser(object):
     def _score_calc(self, word: str) -> int:
         score = 0
         for index, letter in enumerate(word):
-            score += self.letters[index].get(letter, 0)
+            score += self.letters[index].get(letter, 0) / self.letters_max[index] +  self.letter_freq[letter] / self.letter_freq_max
         return score
 
     def is_valid_word(self, word: str) -> bool:
