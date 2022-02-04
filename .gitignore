@@ -123,3 +123,6 @@ util.py
 
 # Wordlists
 wordlist*.txt
+
+# Settings file
+*.cfg

@@ -1,5 +1,8 @@
 import argparse
+import tkinter
 
+from GUI.Menu import Menu
+from GUI.ScreenManager import ScreenManager
 from Guesser.Guesser import Guesser
 
 
@@ -24,10 +27,12 @@ def play_cli(wordlist: list[str]) -> None:
         print("'q' to quit anytime")
         print(f"Recommended Guess: {recommended_guess}")
         guess = None
-        
+        result = None
+
         while guess is None or len(result) != len(guess):
             if guess is not None:
-                print(f"Result ({result}) is different length from guess ({guess})")
+                print(
+                    f"Result ({result}) is different length from guess ({guess})")
             guess = input("Guess Tried [Leave blank if recommeded guess]: ")
             if guess == 'q':
                 return
@@ -44,19 +49,27 @@ def play_cli(wordlist: list[str]) -> None:
 
         if result == recommended_guess:
             break
+
     print(f"Total guesses: {guesses}\nWord: {result}")
+
+
+def play_gui() -> None:
+    """Play the game with a GUI"""
+    root = tkinter.Tk()
+    manager = ScreenManager(root)
+    root.mainloop()
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Wordle Solver')
     parser.add_argument('-w', '--wordlist',
-                        help='Wordlist to use', required=True)
+                        help='Wordlist to use')
     parser.add_argument('-g', '--gui', help='Run the GUI', action='store_true')
 
     args = parser.parse_args()
-    word_list = read_word_list(args.wordlist)
 
     if args.gui:
-        # play_gui(word_list)
-        print("GUI not implemented yet")
+        play_gui()
     else:
+        word_list = read_word_list(args.wordlist)
         play_cli(word_list)
