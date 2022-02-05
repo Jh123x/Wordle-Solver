@@ -51,11 +51,18 @@ class GameWindow(tkinter.Frame):
         """Bind enter key to submit button"""
         self.master.bind('<Return>', lambda *_: self._submit_word())
 
-    def win(self):
+    def win(self) -> None:
         """The win screen"""
         tkinter.messagebox.showinfo(
             "You win!",
             f"You win! The word was: {self.word}!"
+        )
+        self.screen_manager.change_state('menu')
+
+    def giveup(self) ->None:
+        tkinter.messagebox.showinfo(
+            "You gave up :(",
+            f"You gave up :( The word was: {self.word}!"
         )
         self.screen_manager.change_state('menu')
 
@@ -123,10 +130,17 @@ class GameWindow(tkinter.Frame):
         )
         self.submit_btn.grid(row=20, column=10, sticky='s')
 
+        self.giveup_btn = tkinter.Button(
+            self,
+            text="Give up",
+            command=self.giveup
+        )
+        self.giveup_btn.grid(row=0, column=6, sticky='s')
+
     def _generate_text_box(self):
         """Generate textbox to be used"""
         self.text_box = tkinter.Entry(self, font=("Helvetica", 32))
-        self.text_box.grid(row=20, column=0, columnspan=8, sticky='s')
+        self.text_box.grid(row=20, column=0, columnspan=5, sticky='s')
         self.text_box.focus()
 
     def _generate_tiles(self) -> None:
@@ -150,4 +164,4 @@ class GameWindow(tkinter.Frame):
     def _generate_labels(self):
         """Generate all the labels for the screen"""
         self.title = tkinter.Label(self, text="Wordle", font=("Helvetica", 32))
-        self.title.grid(row=0, column=1, columnspan=9, sticky='n')
+        self.title.grid(row=0, column=1, columnspan=4, sticky='n')
