@@ -20,12 +20,13 @@ def play_cli(wordlist: list[str]) -> None:
     recommended_guess = guesser.default_guess
     guess = None
     guesses = 0
+    chances = 1 / len(word_list)
     while True:
         print("Small letter for correct position and letter")
         print("Capital letter for correct letter wrong position")
         print("'_' for wrong letter not in word")
         print("'q' to quit anytime")
-        print(f"Recommended Guess: {recommended_guess}")
+        print(f"Recommended Guess: {recommended_guess}. Chances {chances}")
         guess = None
         result = None
 
@@ -44,7 +45,7 @@ def play_cli(wordlist: list[str]) -> None:
             if result == 'q':
                 break
 
-        recommended_guess = guesser.get_best_guess(result, guess)
+        recommended_guess, chances = guesser.get_best_guess(result, guess)
         guesses += 1
 
         if result == recommended_guess:

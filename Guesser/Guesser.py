@@ -66,6 +66,9 @@ class Guesser(object):
 
         return True
 
+    def is_word(self, word:str) -> bool:
+        return self.word_tree.find(word)
+
     def to_tree_template_string(self, template_string: str) -> str:
         """Convert the original template string to a tree template string"""
         acc = []
@@ -109,7 +112,7 @@ class Guesser(object):
             
             self.max_contain[letter] = self.contains[letter] + 1
 
-    def get_best_guess(self, template_string: str, previous_guess: str = None) -> str:
+    def get_best_guess(self, template_string: str, previous_guess: str = None) -> tuple[str, float]:
         """Get the best guess"""
 
         # Get caps string
@@ -121,7 +124,7 @@ class Guesser(object):
             raise ValueError(f"No words found for template string '{temp_template_string}'")
 
         if len(words) == 1:
-            return tuple(words)[0]
+            return tuple(words)[0], 1
 
         new_words = []
 
@@ -141,4 +144,4 @@ class Guesser(object):
             Wrong: '{self.wrong_list}'.
             All Wrong: '{self.all_wrong_list}'.
             ''')
-        return max(new_words, key=self._score_calc)
+        return max(new_words, key=self._score_calc), 1/len(new_words)
