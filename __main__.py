@@ -1,7 +1,6 @@
 import argparse
 import tkinter
 
-from GUI.Menu import Menu
 from GUI.ScreenManager import ScreenManager
 from Guesser.Guesser import Guesser
 

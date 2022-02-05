@@ -41,7 +41,7 @@ class Guesser(object):
     def _score_calc(self, word: str) -> int:
         score = 0
         for index, letter in enumerate(word):
-            score += self.letters[index].get(letter, 0) / self.letters_max[index] +  self.letter_freq[letter] / self.letter_freq_max
+            score += self.letters[index].get(letter, 0)
         return score
 
     def is_valid_word(self, word: str) -> bool:

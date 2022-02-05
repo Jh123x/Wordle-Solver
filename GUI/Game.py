@@ -1,6 +1,6 @@
 import tkinter
+import tkinter.messagebox
 from os import urandom
-from turtle import width
 
 from .Settings import Settings
 from Guesser.Guesser import Guesser
@@ -37,11 +37,18 @@ class GameWindow(tkinter.Frame):
         self._generate_tiles()
         self._generate_labels()
         self._generate_text_box()
+        self._generate_bindings()
+
+    def _generate_bindings(self):
+        """Bind enter key to submit button"""
+        self.master.bind('<Return>', lambda *_: self._submit_word())
 
     def win(self):
         """The win screen"""
         tkinter.messagebox.showinfo(
-            "You win!", f"You win! The word was{self.word}")
+            "You win!",
+            f"You win! The word was: {self.word}!"
+        )
         self.screen_manager.change_state('menu')
 
     def _submit_word(self) -> None:
@@ -89,7 +96,6 @@ class GameWindow(tkinter.Frame):
             label.grid(row=index//self.word_len+2, column=index %
                        self.word_len, sticky='nsew', padx=(10, 10), pady=(10, 10))
 
-        print(word.lower(), self.word.lower(), word.lower() == self.word.lower())
         if word.lower() == self.word.lower():
             return self.win()
 
@@ -113,6 +119,7 @@ class GameWindow(tkinter.Frame):
         """Generate textbox to be used"""
         self.text_box = tkinter.Entry(self, font=("Helvetica", 32))
         self.text_box.grid(row=20, column=0, columnspan=8, sticky='s')
+        self.text_box.focus()
 
     def _generate_tiles(self) -> None:
         """Generate the tiles for showing the wordle word"""
