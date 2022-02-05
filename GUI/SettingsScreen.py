@@ -33,6 +33,11 @@ class SettingsScreen(tkinter.Frame):
         )
         back_btn.grid(row=0, column=0, pady=(0, 20))
 
+    def save_all_settings(self):
+        """Save the settings for all the config"""
+        for k, v in self.settings_key.items():
+            self.settings.change_settings(k, v.get())
+
     def _generate_settings(self) -> None:
         """Generate the settings changing screen"""
         for key, value in self.settings.get_settings().items():
@@ -40,16 +45,8 @@ class SettingsScreen(tkinter.Frame):
             text_var.set(value)
             self.settings_key[key] = text_var
 
-            label = tkinter.Label(self, text=key.capitalize())
+            label = tkinter.Label(self, text=key)
             entry = tkinter.Entry(self, textvariable=text_var)
-            button = tkinter.Button(
-                self,
-                text="Save",
-                command=lambda: self.settings.change_settings(
-                    key,
-                    text_var.get(),
-                )
-            )
 
             label.grid(
                 row=self.settings_offset + len(self.settings_key),
@@ -61,8 +58,13 @@ class SettingsScreen(tkinter.Frame):
                 column=1,
                 columnspan=3
             )
-
-            button.grid(
-                row=self.settings_offset + len(self.settings_key),
-                column=5
-            )
+        button = tkinter.Button(
+            self,
+            text="Save",
+            command=self.save_all_settings
+        )
+        button.grid(
+            row=20,
+            column=2,
+            pady=(10, 10)
+        )

@@ -12,14 +12,21 @@ class GameWindow(tkinter.Frame):
         super().__init__(master, **kwargs)
         self.screen_manager = screen_manager
         self.settings: Settings = settings
-        self.tile_list = []
-        self.tile_list_sv = []
+        self.tile_list: list[tkinter.Label] = []
+        self.tile_list_sv: list[tkinter.StringVar] = []
 
         # Wordle related logic
-        self.word_list = self._get_word_list()
+        self.word_list: list[str] = self._get_word_list()
         self.guesser: Guesser = Guesser(self.word_list)
-        self.current_word = 0
-        self.word_len = len(self.guesser.default_guess)
+        self.current_word: int = 0
+        guesses = self.settings.read_settings('guesses')
+
+        if not guesses.isdigit():
+            tkinter.messagebox.showerror("Error", "Guesses must be a number")
+            self.screen_manager.change_state('menu')
+
+        self.guesses: int = int(guesses)
+        self.word_len: int = len(self.guesser.default_guess)
 
         # Get the word of the game
         self.word = self.word_list[int(
@@ -28,7 +35,8 @@ class GameWindow(tkinter.Frame):
 
     def _get_word_list(self) -> list[str]:
         """Get the word list based on the settings"""
-        with open(self.settings.read_settings('wordlist')) as f:
+        wordlist_file = self.settings.read_settings('wordlist')
+        with open(wordlist_file) as f:
             return list(filter(lambda x: x.strip(), f.readlines()))
 
     def generate_widgets(self):
@@ -124,7 +132,7 @@ class GameWindow(tkinter.Frame):
     def _generate_tiles(self) -> None:
         """Generate the tiles for showing the wordle word"""
 
-        for y in range(6):
+        for y in range(self.guesses):
             for x in range(self.word_len):
                 var = tkinter.StringVar()
                 var.set(" ")

@@ -25,6 +25,7 @@ class Settings(object):
         parser.set('SETTINGS', 'title', "Wordle")
         parser.set('SETTINGS', '; Geometry of the window')
         parser.set('SETTINGS', 'geometry', "800x600")
+        parser.set('SETTINGS', 'guesses', "6")
         with open(filename, 'w') as configfile:
             parser.write(configfile)
 
