@@ -16,6 +16,7 @@ class Menu(tkinter.Frame):
         """Generate all the widgets for the screen."""
         self._generate_labels()
         self._generate_buttons()
+        self._generate_bindings()
 
     def _generate_labels(self) -> None:
         """Generate all the labels for the widget."""
@@ -23,6 +24,10 @@ class Menu(tkinter.Frame):
             self, text="Wordle", font=("Helvetica", 64))
         self.title_label.grid(row=0, column=0, columnspan=10,
                               sticky='nesw', pady=(0, 30))
+
+    def _generate_bindings(self):
+        """Bind enter key to submit button"""
+        self.master.bind('<Return>', lambda *_: self.manager.change_state('game'))
 
     def _generate_buttons(self) -> None:
         """Generate all the buttons for the widget."""
