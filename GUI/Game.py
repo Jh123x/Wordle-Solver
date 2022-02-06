@@ -3,7 +3,7 @@ import tkinter.messagebox
 from os import urandom
 
 from .Settings import Settings
-from Guesser.Guesser import Guesser
+from Guesser.Guesser import HardcoreGuesser
 
 
 class GameWindow(tkinter.Frame):
@@ -17,7 +17,7 @@ class GameWindow(tkinter.Frame):
 
         # Wordle related logic
         self.word_list: list[str] = self._get_word_list()
-        self.guesser: Guesser = Guesser(self.word_list)
+        self.guesser: HardcoreGuesser = HardcoreGuesser(self.word_list)
         self.current_word: int = 0
         guesses = self.settings.read_settings('guesses')
 
@@ -36,6 +36,7 @@ class GameWindow(tkinter.Frame):
     def _get_word_list(self) -> list[str]:
         """Get the word list based on the settings"""
         wordlist_file = self.settings.read_settings('wordlist')
+        print(f"Getting wordlist from {wordlist_file}")
         with open(wordlist_file) as f:
             return list(filter(lambda x: x.strip(), f.readlines()))
 

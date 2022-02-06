@@ -1,5 +1,5 @@
 # Wordle Solver
- A Solver for Wordle
+A Solver for Wordle hardcore mode
 
 
 ## Credits

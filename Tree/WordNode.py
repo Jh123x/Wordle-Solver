@@ -76,5 +76,18 @@ class WordNode(object):
         # Recursively find the word
         return self.dict.get(letter).find_word(word[1:])
 
+    def remove(self, word: str) -> bool:
+        """Remove a word from the word tree"""
+
+        if len(word) == 0:
+            self.is_word = False
+            return True
+
+        first_letter = word[0]        
+        if first_letter not in self.dict:
+            return False
+        return self.dict[first_letter].remove(word[1:])
+
     def __repr__(self) -> str:
-        return ', '.join(self.find_template('__'))
+        """Return the string representation of the node"""
+        return ', '.join(self.get_all_word())

@@ -2,7 +2,7 @@ import argparse
 import tkinter
 
 from GUI.ScreenManager import ScreenManager
-from Guesser.Guesser import Guesser
+from Guesser.Guesser import HardcoreGuesser
 
 
 def read_word_list(filename: str) -> list[str]:
@@ -13,7 +13,7 @@ def read_word_list(filename: str) -> list[str]:
 
 def play_cli(wordlist: list[str]) -> None:
     # Create word tree
-    guesser = Guesser(wordlist)
+    guesser = HardcoreGuesser(wordlist)
 
     # 5 tries total
     recommended_guess = guesser.default_guess

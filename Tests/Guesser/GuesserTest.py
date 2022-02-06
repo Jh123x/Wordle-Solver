@@ -1,6 +1,6 @@
 import unittest
 
-from Guesser.Guesser import Guesser
+from Guesser.Guesser import HardcoreGuesser
 
 wordlist_file = 'wordle-answers-alphabetical.txt'
 with open(wordlist_file) as f:
@@ -9,12 +9,13 @@ with open(wordlist_file) as f:
 
 class GuesserTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.guesser = Guesser(wordlist)
-        self.less_guesser = Guesser(word_list=['slate', 'plate'])
+        self.guesser = HardcoreGuesser(wordlist)
+        self.less_guesser = HardcoreGuesser(['slate', 'plate'])
+        self.blank_guesser = HardcoreGuesser([])
         return super().setUp()
 
     def test_2nd_letter_not_found(self):
-        self.guesser.get_best_guess('____s', 'sssss')
+        self.guesser.get_best_guess('____s', 'sssss', self.guesser.contains)
         self.assertEqual(self.guesser.contains, {'s': 1})
         self.assertTrue(self.guesser.is_valid_word('fleas'))
 
@@ -30,8 +31,8 @@ class GuesserTest(unittest.TestCase):
         self.assertTrue(self.guesser.is_valid_word(valid_word))
 
         self.less_guesser.get_best_guess('_late', word)
-        self.assertFalse(self.guesser.is_valid_word(word))
-        self.assertTrue(self.guesser.is_valid_word(valid_word))
+        self.assertFalse(self.less_guesser.is_valid_word(word))
+        self.assertTrue(self.less_guesser.is_valid_word(valid_word))
 
     def test_to_tree_template(self):
         normal_template = '______'
